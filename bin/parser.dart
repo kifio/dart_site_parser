@@ -21,7 +21,7 @@ String getLink(String href) {
   const fragment = '#';
   const url = 'https://www.dartlang.org';
 
-  if (href.contains(fragment)) {
+  if (href.startsWith(fragment)) {
     return null;
   } else {
     return href.contains(http)
