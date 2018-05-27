@@ -5,19 +5,27 @@ List<String> parseHrefs(String html) {
   Iterable<Match> matches = exp.allMatches(html);
   for (Match match in matches) {
     String href = match.group(0);
-    results.add(getFormattedHref(href));
+    String link = getLink(href);
+    if (link != null) {
+      results.add(link);
+    }
   }
   print('Parse ${results.length} hrefs');
   return results;
 }
 
-String getFormattedHref(String href) {
+String getLink(String href) {
+
   const hrefAttr = 'href="';
   const http = 'http';
-  const url = 'https://www.dartlang.org ';
-  String result = href.contains(http)
-    ? href
-    : href.replaceAll(hrefAttr,'$hrefAttr$url');
-  // print(result);
-  return result;
+  const fragment = '#';
+  const url = 'https://www.dartlang.org';
+
+  if (href.contains(fragment)) {
+    return null;
+  } else {
+    return href.contains(http)
+      ? href
+      : href.replaceAll(hrefAttr,'$hrefAttr$url');
+  }
 }
